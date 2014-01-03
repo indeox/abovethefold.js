@@ -136,7 +136,7 @@ if (system.args.length === 1) {
     }
 
     function generateCSS(rulesList) {
-        var output = [];
+        var output = ['/* NOTE: This should only used as guidance, not gospel */'];
 
         for (var cssHref in rulesList) {
             var cssRules = rulesList[cssHref];
