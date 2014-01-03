@@ -1,7 +1,7 @@
 abovethefold.js
 ===============
 
-An experimental phantomjs script based on Paul Kinlan's [blog post](http://paul.kinlan.me/detecting-critical-above-the-fold-css/) to detect elements visible above the fold and output the CSS styles required to display them.
+An **experimental** phantomjs script based on Paul Kinlan's [blog post](http://paul.kinlan.me/detecting-critical-above-the-fold-css/) to detect elements visible above the fold and output the CSS styles required to display them.
 
 *Note* The generated CSS file is not meant to be used as-is and is merely a guide at which styles **could** be inlined to optimise page speed render.
 
