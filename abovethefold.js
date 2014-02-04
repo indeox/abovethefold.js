@@ -21,13 +21,13 @@ if (system.args.length === 1) {
     var currentRequests = 0,
         screenshotName = false,
         lastRequestTimeout,
-        finalTimeout;
+        finalTimeout,
+        outputDir;
 
     if (system.args.indexOf('--disable-js') != -1) {
         page.settings.javascriptEnabled = false;
     }
 
-    screenshotName = 'abovethefold.png';
 
     page.onLoadStarted = function () {
         page.startTime = new Date();
@@ -127,15 +127,20 @@ if (system.args.length === 1) {
             return rulesList;
         }, width, height);
 
-        fs.makeDirectory('output');
+        var pageSafeAddress = page.url.replace("http://","").replace(/\/$/,"").replace(/\//gi,"_");
+        var outputDir = 'output/' + pageSafeAddress + "/";
+        if (!fs.isDirectory(outputDir)) fs.makeDirectory(outputDir);
 
-        generateCSS(rules);
+        outputFileName = pageSafeAddress + '.' + width + 'x' + height + '-' + page.startTime.toISOString() + '-' + 'abovethefold';
 
-        page.render('output/'+screenshotName);
+        generateCSS(rules,outputDir+outputFileName);
+
+        page.render(outputDir+outputFileName+'.png');
+        console.log("*******************\nFiles saved to:\n" + outputDir + outputFileName + ".{css,js}");
         phantom.exit();
     }
 
-    function generateCSS(rulesList) {
+    function generateCSS(rulesList, outputPath) {
         var output = ['/* NOTE: This should only be used as guidance, not gospel */'];
 
         for (var cssHref in rulesList) {
@@ -150,6 +155,6 @@ if (system.args.length === 1) {
         }
 
 
-        fs.write('output/abovethefold.css', output.join('\n'), 'w');
+        fs.write(outputPath + '.css', output.join('\n'), 'w');
     }
 }
