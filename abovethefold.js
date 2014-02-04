@@ -127,7 +127,7 @@ if (system.args.length === 1) {
             return rulesList;
         }, width, height);
 
-        var pageSafeAddress = page.url.replace("http://","").replace("/","");
+        var pageSafeAddress = page.url.replace("http://","").replace(/\/$/,"").replace(/\//gi,"_");
         var outputDir = 'output/' + pageSafeAddress + "/";
         if (!fs.isDirectory(outputDir)) fs.makeDirectory(outputDir);
 
